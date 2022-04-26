@@ -12,4 +12,9 @@ public class ControllerException extends RuntimeException {
         this.entityCode = entityCode;
     }
 
+    public ControllerException(String message, Throwable cause, String entityCode) {
+        super(message, cause);
+        this.entityCode = entityCode;
+    }
+
 }
