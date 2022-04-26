@@ -1,4 +1,4 @@
-package com.kuntsevich.organizer.controller.entity;
+package com.kuntsevich.organizer.entity;
 
 public enum TaskStatus {
     TO_DO, IN_PROGRESS, DONE

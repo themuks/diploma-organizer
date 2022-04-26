@@ -1,4 +1,4 @@
-package com.kuntsevich.organizer.controller.entity;
+package com.kuntsevich.organizer.entity;
 
 public enum ActivityStatus {
     ACTIVE, INACTIVE

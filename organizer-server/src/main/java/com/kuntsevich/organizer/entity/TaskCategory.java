@@ -1,4 +1,4 @@
-package com.kuntsevich.organizer.controller.entity;
+package com.kuntsevich.organizer.entity;
 
 import lombok.Data;
 
@@ -9,11 +9,10 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-public class Note {
+public class TaskCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String text;
 
 }

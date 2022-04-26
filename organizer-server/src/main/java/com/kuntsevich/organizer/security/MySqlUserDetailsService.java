@@ -1,6 +1,6 @@
 package com.kuntsevich.organizer.security;
 
-import com.kuntsevich.organizer.controller.entity.User;
+import com.kuntsevich.organizer.entity.User;
 import com.kuntsevich.organizer.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

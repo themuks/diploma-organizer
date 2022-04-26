@@ -1,6 +1,6 @@
 package com.kuntsevich.organizer.controller;
 
-import com.kuntsevich.organizer.controller.entity.Task;
+import com.kuntsevich.organizer.entity.Task;
 import com.kuntsevich.organizer.exception.ControllerException;
 import com.kuntsevich.organizer.exception.ServiceException;
 import com.kuntsevich.organizer.service.TaskService;

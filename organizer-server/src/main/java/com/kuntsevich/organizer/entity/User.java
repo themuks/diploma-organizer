@@ -1,5 +1,6 @@
-package com.kuntsevich.organizer.controller.entity;
+package com.kuntsevich.organizer.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,9 +8,10 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
 
-@Data
 @Entity
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id

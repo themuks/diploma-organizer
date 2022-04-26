@@ -1,4 +1,4 @@
-package com.kuntsevich.organizer.controller.entity;
+package com.kuntsevich.organizer.entity;
 
 import lombok.Data;
 

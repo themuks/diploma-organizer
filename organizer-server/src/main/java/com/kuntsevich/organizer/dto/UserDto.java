@@ -1,8 +1,8 @@
 package com.kuntsevich.organizer.dto;
 
-import com.kuntsevich.organizer.controller.entity.ActivityStatus;
-import com.kuntsevich.organizer.controller.entity.Gender;
-import com.kuntsevich.organizer.controller.entity.Role;
+import com.kuntsevich.organizer.entity.ActivityStatus;
+import com.kuntsevich.organizer.entity.Gender;
+import com.kuntsevich.organizer.entity.Role;
 
 import java.time.LocalDateTime;
 
