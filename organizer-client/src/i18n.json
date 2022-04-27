@@ -1,6 +1,8 @@
 {
   "en": {
     "translation": {
+      "Logo": "Logo",
+      "Application": "Application",
       "Main": "Main",
       "Email": "Email",
       "Password": "Password",
@@ -11,7 +13,14 @@
       "Reminders": "Reminders",
       "Planning": "Planning",
       "Statistics": "Statistics",
-      "Calendar": "Calendar"
+      "Calendar": "Calendar",
+      "OpenUserMenu": "Open user menu",
+      "Profile": "Profile",
+      "Settings": "Settings",
+      "SignOut": "Sign Out",
+      "Copyright": "All rights are protected",
+      "CreateTask": "New task",
+      "CreateReminder": "New reminder"
     }
   },
   "ru": {

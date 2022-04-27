@@ -1,29 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import SubpageLayout from "../../components/SubpageLayout";
+import Button from "../../components/Button";
 
 const TasksPage = () => {
+    const {t, i18n} = useTranslation();
     const [tasks, setTasks] = useState([]);
     const navigate = useNavigate();
 
-    fetch(`${process.env.REACT_APP_BACKEND_API_URL}/tasks`)
-        .then(response => {
-            if (response.status === 401) {
-                navigate("/login");
-                return;
-            }
-
-            response.json().then(data => setTasks(data));
-        });
-
     return (
-        <div className="flex flex-col gap-4 bg-red-400">
+        <SubpageLayout>
+            <Button text={t("CreateTask")}/>
+
             {tasks.map(task =>
                 <>
                     {task.title}
                     {task.description}
                 </>
             )}
-        </div>
+        </SubpageLayout>
     );
 };
 

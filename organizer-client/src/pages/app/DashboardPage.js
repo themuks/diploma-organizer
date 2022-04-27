@@ -1,9 +1,15 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+import SubpageLayout from "../../components/SubpageLayout";
 
-function DashboardPage(props) {
+const DashboardPage = () => {
+    const {t, i18n} = useTranslation();
+
     return (
-        <div>This is dashboard</div>
+        <SubpageLayout>
+            This is dashboard
+        </SubpageLayout>
     );
-}
+};
 
 export default DashboardPage;
