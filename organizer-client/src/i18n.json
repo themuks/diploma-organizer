@@ -1,0 +1,22 @@
+{
+  "en": {
+    "translation": {
+      "Main": "Main",
+      "Email": "Email",
+      "Password": "Password",
+      "RememberMe": "Remember me",
+      "Dashboard": "Dashboard",
+      "Tasks": "Tasks",
+      "Notes": "Notes",
+      "Reminders": "Reminders",
+      "Planning": "Planning",
+      "Statistics": "Statistics",
+      "Calendar": "Calendar"
+    }
+  },
+  "ru": {
+    "translation": {
+      "Main": "Главная"
+    }
+  }
+}
