@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +34,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> signUp(@RequestBody UserRegistrationData userRegistrationData) {
-        log.debug("User registration data: {}", userRegistrationData);
+        log.info("User registration data: {}", userRegistrationData);
 
         try {
             userService.signUp(userRegistrationData);

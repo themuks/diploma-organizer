@@ -37,7 +37,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     protected ResponseEntity<Object> entityNotFoundException(EntityNotFoundException ex) {
         String errorCode = HttpStatus.NOT_FOUND.value() + ex.getEntityCode();
-        return new ResponseEntity<>(new ApiError(ex.getLocalizedMessage(), errorCode), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ApiResponse(ex.getLocalizedMessage(), errorCode), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -45,7 +45,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         log.info("Bad request", ex);
 
         String errorCode = Integer.toString(HttpStatus.BAD_REQUEST.value());
-        return new ResponseEntity<>(new ApiError(ex.getLocalizedMessage(), errorCode), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ApiResponse(ex.getLocalizedMessage(), errorCode), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ControllerException.class)
@@ -53,7 +53,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         log.error("Server internal error occurred", ex);
 
         String errorCode = HttpStatus.BAD_REQUEST.value() + ex.getEntityCode();
-        return new ResponseEntity<>(new ApiError(ex.getLocalizedMessage(), errorCode),
+        return new ResponseEntity<>(new ApiResponse(ex.getLocalizedMessage(), errorCode),
                                     HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -61,8 +61,10 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleBadRequestExceptions(Exception e) {
         log.info("Bad request", e);
 
-        ApiError apiError = new ApiError(e.getLocalizedMessage(), Integer.toString(HttpStatus.BAD_REQUEST.value()));
-        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+        ApiResponse
+                apiResponse =
+                new ApiResponse(e.getLocalizedMessage(), Integer.toString(HttpStatus.BAD_REQUEST.value()));
+        return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
     }
 
     @Override
@@ -70,8 +72,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers,
                                                                   HttpStatus status,
                                                                   WebRequest request) {
-        ApiError apiError = new ApiError(ex.getLocalizedMessage(), Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse(ex.getLocalizedMessage(), Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -79,9 +81,9 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                           HttpHeaders headers,
                                                                           HttpStatus status,
                                                                           WebRequest request) {
-        ApiError apiError =
-                new ApiError(ex.getParameterName() + " parameter is missing", Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse =
+                new ApiResponse(ex.getParameterName() + " parameter is missing", Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -89,9 +91,11 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                         HttpHeaders headers,
                                                         HttpStatus status,
                                                         WebRequest request) {
-        ApiError apiError = new ApiError("Parameter " + ex.getValue() + " should be of type " + ex.getRequiredType(),
-                                         Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse
+                apiResponse =
+                new ApiResponse("Parameter " + ex.getValue() + " should be of type " + ex.getRequiredType(),
+                                Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -99,8 +103,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers,
                                                                   HttpStatus status,
                                                                   WebRequest request) {
-        ApiError apiError = new ApiError("Malformed JSON request", Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse("Malformed JSON request", Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -108,8 +112,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                          HttpHeaders headers,
                                                                          HttpStatus status,
                                                                          WebRequest request) {
-        ApiError apiError = new ApiError(ex.getLocalizedMessage(), Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse(ex.getLocalizedMessage(), Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -117,8 +121,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                      HttpHeaders headers,
                                                                      HttpStatus status,
                                                                      WebRequest request) {
-        ApiError apiError = new ApiError(ex.getLocalizedMessage(), Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse(ex.getLocalizedMessage(), Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -126,8 +130,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                       HttpHeaders headers,
                                                                       HttpStatus status,
                                                                       WebRequest request) {
-        ApiError apiError = new ApiError(ex.getLocalizedMessage(), Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse(ex.getLocalizedMessage(), Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -135,8 +139,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                HttpHeaders headers,
                                                                HttpStatus status,
                                                                WebRequest request) {
-        ApiError apiError = new ApiError(ex.getLocalizedMessage(), Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse(ex.getLocalizedMessage(), Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -144,8 +148,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                           HttpHeaders headers,
                                                                           HttpStatus status,
                                                                           WebRequest request) {
-        ApiError apiError = new ApiError(ex.getLocalizedMessage(), Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse(ex.getLocalizedMessage(), Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -153,8 +157,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers,
                                                                   HttpStatus status,
                                                                   WebRequest request) {
-        ApiError apiError = new ApiError(ex.getLocalizedMessage(), Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse(ex.getLocalizedMessage(), Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -162,8 +166,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers,
                                                                   HttpStatus status,
                                                                   WebRequest request) {
-        ApiError apiError = new ApiError(ex.getLocalizedMessage(), Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse(ex.getLocalizedMessage(), Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -171,8 +175,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                      HttpHeaders headers,
                                                                      HttpStatus status,
                                                                      WebRequest request) {
-        ApiError apiError = new ApiError(ex.getLocalizedMessage(), Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse(ex.getLocalizedMessage(), Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -180,8 +184,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                          HttpHeaders headers,
                                                          HttpStatus status,
                                                          WebRequest request) {
-        ApiError apiError = new ApiError(ex.getLocalizedMessage(), Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse(ex.getLocalizedMessage(), Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -189,8 +193,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                    HttpHeaders headers,
                                                                    HttpStatus status,
                                                                    WebRequest request) {
-        ApiError apiError = new ApiError(ex.getLocalizedMessage(), Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse(ex.getLocalizedMessage(), Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -198,8 +202,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                         HttpHeaders headers,
                                                                         HttpStatus status,
                                                                         WebRequest webRequest) {
-        ApiError apiError = new ApiError(ex.getLocalizedMessage(), Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse(ex.getLocalizedMessage(), Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
     @Override
@@ -208,8 +212,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                                                              HttpHeaders headers,
                                                              HttpStatus status,
                                                              WebRequest request) {
-        ApiError apiError = new ApiError(ex.getLocalizedMessage(), Integer.toString(status.value()));
-        return new ResponseEntity<>(apiError, status);
+        ApiResponse apiResponse = new ApiResponse(ex.getLocalizedMessage(), Integer.toString(status.value()));
+        return new ResponseEntity<>(apiResponse, status);
     }
 
 }

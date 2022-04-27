@@ -12,12 +12,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Streamable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     public static final String ROLE_USER = "USER";
@@ -25,14 +27,14 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public List<User> findAll() {
-        return Streamable.of(userRepository.findAll()).toList();
+    public User findUserByEmail(String email) throws ServiceException {
+        return userRepository.findByEmail(email)
+                             .orElseThrow(() -> new ServiceException("User with email = (" + email + ") not found"));
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public List<User> findAll() {
+        return Streamable.of(userRepository.findAll()).toList();
     }
 
     @Override
@@ -45,10 +47,8 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = new User();
-
-        user.setEmail(userRegistrationData.email());
-
         String encodedPassword = passwordEncoder.encode(userRegistrationData.password());
+        user.setEmail(userRegistrationData.email());
         user.setPassword(encodedPassword);
 
         Optional<Role> optionalRole = roleRepository.findByName(ROLE_USER);
@@ -59,9 +59,7 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Role with name = (" + ROLE_USER + ") not found");
         }
 
-        userRepository.save(user);
-
-        return user;
+        return userRepository.save(user);
     }
 
 }
