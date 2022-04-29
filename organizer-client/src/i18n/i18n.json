@@ -20,7 +20,15 @@
       "SignOut": "Sign Out",
       "Copyright": "All rights are protected",
       "CreateTask": "New task",
-      "CreateReminder": "New reminder"
+      "CreateReminder": "New reminder",
+      "NoNotes": "Please create a note",
+      "Save": "Save",
+      "ValidationError": "Error",
+      "ValidationErrorRequired": "This field is required",
+      "Title": "Title",
+      "Text": "Text",
+      "Error": "Error",
+      "ErrorMessage": "Some error occurred"
     }
   },
   "ru": {

@@ -5,8 +5,8 @@ import SubpageLayout from "../../components/SubpageLayout";
 import Button from "../../components/Button";
 
 const TasksPage = () => {
-    const {t, i18n} = useTranslation();
-    const [tasks, setTasks] = useState([]);
+    const { t, i18n } = useTranslation();
+    const [ tasks, setTasks ] = useState([]);
     const navigate = useNavigate();
 
     return (

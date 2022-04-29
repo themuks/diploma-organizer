@@ -1,18 +1,18 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import Login from "../../components/login.component";
+import Login from "../../components/Login";
 
-const Input = ({label, name, register, type = "text", required}) => (
+const Input = ({ label, name, register, type = "text", required }) => (
     <>
         <label>{label}</label>
-        <input type={type} {...register(name, {required})} />
+        <input type={type} {...register(name, { required })} />
     </>
 );
 
 function LoginPage() {
-    const {register, handleSubmit, formState: {errors}} = useForm();
-    const {t, i18n} = useTranslation();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { t, i18n } = useTranslation();
 
     return (
         // <form onSubmit={handleSubmit(onSubmit)}>

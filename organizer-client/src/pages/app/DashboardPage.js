@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import SubpageLayout from "../../components/SubpageLayout";
 
 const DashboardPage = () => {
-    const {t, i18n} = useTranslation();
+    const { t, i18n } = useTranslation();
 
     return (
         <SubpageLayout>

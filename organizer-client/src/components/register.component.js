@@ -4,7 +4,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import { connect } from "react-redux";
-import { register } from "../actions/auth";
+import { register } from "../redux/actions/auth";
 
 const required = (value) => {
     if (!value) {
@@ -101,7 +101,7 @@ class Register extends Component {
     }
 
     render() {
-        const {message} = this.props;
+        const { message } = this.props;
         return (
             <div className="col-md-12">
                 <div className="card card-container">
@@ -126,7 +126,7 @@ class Register extends Component {
                                         name="username"
                                         value={this.state.username}
                                         onChange={this.onChangeUsername}
-                                        validations={[required, vemail]}
+                                        validations={[ required, vemail ]}
                                     />
                                 </div>
                                 <div className="form-group">
@@ -137,7 +137,7 @@ class Register extends Component {
                                         name="email"
                                         value={this.state.email}
                                         onChange={this.onChangeEmail}
-                                        validations={[required, email]}
+                                        validations={[ required, email ]}
                                     />
                                 </div>
                                 <div className="form-group">
@@ -148,7 +148,7 @@ class Register extends Component {
                                         name="password"
                                         value={this.state.password}
                                         onChange={this.onChangePassword}
-                                        validations={[required, vpassword]}
+                                        validations={[ required, vpassword ]}
                                     />
                                 </div>
                                 <div className="form-group">
@@ -158,14 +158,15 @@ class Register extends Component {
                         )}
                         {message && (
                             <div className="form-group">
-                                <div className={this.state.successful ? "alert alert-success" : "alert alert-danger"}
-                                     role="alert">
+                                <div
+                                    className={this.state.successful ? "alert alert-success" : "alert alert-danger"}
+                                    role="alert">
                                     {message}
                                 </div>
                             </div>
                         )}
                         <CheckButton
-                            style={{display: "none"}}
+                            style={{ display: "none" }}
                             ref={(c) => {
                                 this.checkBtn = c;
                             }}
@@ -178,7 +179,7 @@ class Register extends Component {
 }
 
 function mapStateToProps(state) {
-    const {message} = state.message;
+    const { message } = state.message;
     return {
         message
     };

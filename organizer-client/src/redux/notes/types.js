@@ -1,0 +1,7 @@
+export const CREATE_NOTE = "NOTES/CREATE_NOTE";
+export const FETCH_NOTES = "NOTES/FETCH_NOTES";
+export const FETCH_NOTE = "NOTES/FETCH_NOTE";
+export const SHOW_LOADER = "NOTES/SHOW_LOADER";
+export const HIDE_LOADER = "NOTES/HIDE_LOADER";
+export const SET_ERROR = "NOTES/SET_ERROR";
+export const CLEAR_ERROR = "NOTES/CLEAR_ERROR";

@@ -4,7 +4,7 @@ import Button from "../../components/Button";
 import { useTranslation } from "react-i18next";
 
 const RemindersPage = () => {
-    const {t, i18n} = useTranslation();
+    const { t, i18n } = useTranslation();
 
     return (
         <SubpageLayout>
