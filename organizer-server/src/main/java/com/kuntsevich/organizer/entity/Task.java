@@ -1,33 +1,30 @@
 package com.kuntsevich.organizer.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
-public class Task {
+public class Task extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private LocalDateTime creationTime;
-    private LocalDateTime completionTime;
-    private LocalDateTime intervalFromTime;
-    private LocalDateTime intervalToTime;
+    private String title;
+    private String description;
+    private LocalDateTime dueTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     @Enumerated
-    private Priority priority;
+    private Priority priority = Priority.NO_PRIORITY;
     @Enumerated
-    private TaskStatus taskStatus;
+    private TaskStatus taskStatus = TaskStatus.TO_DO;
     @Enumerated
-    private Regularity regularity;
-    @ManyToOne
+    private Regularity regularity = Regularity.NOT_REGULAR;
+    @ManyToOne(optional = false)
     private User user;
-    @ManyToOne
-    private TaskList taskList;
-    @OneToMany
-    private List<Note> notes;
 
 }

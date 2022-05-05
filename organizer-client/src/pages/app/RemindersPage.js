@@ -1,6 +1,6 @@
 import React from "react";
 import SubpageLayout from "../../components/SubpageLayout";
-import Button from "../../components/Button";
+import Button from "../../components/form/Button";
 import { useTranslation } from "react-i18next";
 
 const RemindersPage = () => {

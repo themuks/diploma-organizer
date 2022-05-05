@@ -1,57 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import NotesService from "../../../services/notes.service";
-import { useParams } from "react-router-dom";
-import Button from "../../../components/Button";
-import { useTranslation } from "react-i18next";
-import SubpageLayout from "../../../components/SubpageLayout";
-import ValidationErrorMessage from "../../../components/ValidationErrorMessage";
-
-const Input = ({ label, name, type, defaultValue, register, required }) => (
-    <>
-        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{label}</label>
-        <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type={type} defaultValue={defaultValue} {...register(name, { required })} />
-    </>
-);
-
-const TextArea = ({ label, name, defaultValue, register, required }) => (
-    <>
-        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{label}</label>
-        <textarea
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            defaultValue={defaultValue} {...register(name, { required })} />
-    </>
-);
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getNote, getViewState, ViewState } from "../../../redux/notes/selectors";
+import * as actions from "../../../redux/notes/actions";
+import Alert from "../../../components/Alert";
+import NoteForm from "../../../components/notes/NoteForm";
 
 const NoteDetailsPage = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const { t } = useTranslation();
     const onSubmit = note => {
-        console.log(note);
-        NotesService.updateNote(id, note);
+        dispatch(actions.updateNote(id, note));
+    };
+    const onDelete = () => {
+        dispatch(actions.deleteNote(id));
+        navigate(-1);
     };
 
-    useEffect(() => {
-        NotesService.getNote(id).then(response => {
-            reset(response.data);
-        });
-    }, [ id ]);
+    const dispatch = useDispatch();
+    const viewState = useSelector(getViewState);
+    const note = useSelector(getNote);
 
-    return (
-        <SubpageLayout>
-            <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-                <Input
-                    label={t("Title")} type="text" name="title" register={register} required/>
-                {errors.title && <ValidationErrorMessage text={t("ValidationErrorRequired")}/>}
-                <TextArea label={t("Text")} name="text" register={register} required/>
-                {errors.text && <ValidationErrorMessage text={t("ValidationErrorRequired")}/>}
-                <Button type="submit" text={t("Save")}/>
-            </form>
-        </SubpageLayout>
-    );
+    useEffect(() => {
+        dispatch(actions.getNote(id));
+    }, [ dispatch, id ]);
+
+    useEffect(() => {
+        reset(note);
+    }, [ id, note, reset ]);
+
+    switch (viewState) {
+        case ViewState.LOADING:
+            return <NoteForm
+                isLoading={true}
+                onDelete={onDelete}
+                onSubmit={handleSubmit(onSubmit)} register={register} errors={errors}/>;
+        case ViewState.ERROR:
+            return <Alert/>;
+        default:
+            return <NoteForm
+                onDelete={onDelete}
+                onSubmit={handleSubmit(onSubmit)} register={register} errors={errors}/>;
+    }
 };
 
 export default NoteDetailsPage;

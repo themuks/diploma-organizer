@@ -1,5 +1,6 @@
 package com.kuntsevich.organizer.controller;
 
+import com.kuntsevich.organizer.dto.TaskDto;
 import com.kuntsevich.organizer.entity.Task;
 import com.kuntsevich.organizer.entity.User;
 import com.kuntsevich.organizer.exception.ApiResponse;
@@ -8,6 +9,7 @@ import com.kuntsevich.organizer.exception.OperationForbiddenException;
 import com.kuntsevich.organizer.exception.ServiceException;
 import com.kuntsevich.organizer.service.TaskService;
 import com.kuntsevich.organizer.service.UserService;
+import com.kuntsevich.organizer.util.ObjectMapperUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -28,7 +30,7 @@ public class TaskController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<Task> create(Authentication authentication, Task task) {
+    public ResponseEntity<TaskDto> create(Authentication authentication, @RequestBody TaskDto task) {
         String email = authentication.getName();
         User user;
 
@@ -38,18 +40,19 @@ public class TaskController {
             throw new ControllerException(e, ENTITY_CODE);
         }
 
-        task.setUser(user);
+        Task mappedTask = ObjectMapperUtils.map(task, Task.class);
 
         try {
-            Task savedTask = taskService.create(task);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedTask);
+            Task savedTask = taskService.create(user, mappedTask);
+            TaskDto mappedSavedTask = ObjectMapperUtils.map(savedTask, TaskDto.class);
+            return ResponseEntity.status(HttpStatus.CREATED).body(mappedSavedTask);
         } catch (ServiceException e) {
             throw new ControllerException(e, ENTITY_CODE);
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> findAll(Authentication authentication, Pageable pageable) {
+    public ResponseEntity<List<TaskDto>> findAll(Authentication authentication, Pageable pageable) {
         String email = authentication.getName();
         User user;
 
@@ -60,14 +63,16 @@ public class TaskController {
         }
 
         try {
-            return ResponseEntity.ok(taskService.findUserTasks(user, pageable));
+            List<Task> userTasks = taskService.findUserTasks(user, pageable);
+            List<TaskDto> tasks = ObjectMapperUtils.mapAll(userTasks, TaskDto.class);
+            return ResponseEntity.ok(tasks);
         } catch (ServiceException e) {
             throw new ControllerException(e, ENTITY_CODE);
         }
     }
 
-    @PatchMapping("{id}")
-    public ResponseEntity<Object> update(Authentication authentication, @PathVariable Long id, @RequestBody Task task) {
+    @GetMapping("{id}")
+    public ResponseEntity<Object> findById(Authentication authentication, @PathVariable Long id) {
         String email = authentication.getName();
         User user;
 
@@ -77,10 +82,66 @@ public class TaskController {
             throw new ControllerException(e, ENTITY_CODE);
         }
 
-        task.setId(id);
         try {
-            Task updatedTask = taskService.updateUserTask(user, task);
-            return ResponseEntity.ok(updatedTask);
+            Task task = taskService.findUserTask(user, id);
+            TaskDto mappedTask = ObjectMapperUtils.map(task, TaskDto.class);
+            return ResponseEntity.ok(mappedTask);
+        } catch (ServiceException e) {
+            throw new ControllerException(e, ENTITY_CODE);
+        } catch (OperationForbiddenException e) {
+            ApiResponse apiResponse =
+                    new ApiResponse(e.getLocalizedMessage(), HttpServletResponse.SC_FORBIDDEN + ENTITY_CODE);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(apiResponse);
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Object> update(Authentication authentication,
+                                         @PathVariable Long id,
+                                         @RequestBody TaskDto task) {
+        String email = authentication.getName();
+        User user;
+
+        try {
+            user = userService.findUserByEmail(email);
+        } catch (ServiceException e) {
+            throw new ControllerException(e, ENTITY_CODE);
+        }
+
+        Task mappedTask = ObjectMapperUtils.map(task, Task.class);
+
+        try {
+            Task updatedTask = taskService.update(user, id, mappedTask);
+            TaskDto mappedUpdatedTask = ObjectMapperUtils.map(updatedTask, TaskDto.class);
+            return ResponseEntity.ok(mappedUpdatedTask);
+        } catch (ServiceException e) {
+            throw new ControllerException(e, ENTITY_CODE);
+        } catch (OperationForbiddenException e) {
+            ApiResponse apiResponse =
+                    new ApiResponse(e.getLocalizedMessage(), HttpServletResponse.SC_FORBIDDEN + ENTITY_CODE);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(apiResponse);
+        }
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<Object> partialUpdate(Authentication authentication,
+                                                @PathVariable Long id,
+                                                @RequestBody TaskDto task) {
+        String email = authentication.getName();
+        User user;
+
+        try {
+            user = userService.findUserByEmail(email);
+        } catch (ServiceException e) {
+            throw new ControllerException(e, ENTITY_CODE);
+        }
+
+        Task mappedTask = ObjectMapperUtils.map(task, Task.class);
+
+        try {
+            Task updatedTask = taskService.partialUpdate(user, id, mappedTask);
+            TaskDto mappedUpdatedTask = ObjectMapperUtils.map(updatedTask, TaskDto.class);
+            return ResponseEntity.ok(mappedUpdatedTask);
         } catch (ServiceException e) {
             throw new ControllerException(e, ENTITY_CODE);
         } catch (OperationForbiddenException e) {
@@ -103,7 +164,8 @@ public class TaskController {
 
         try {
             Task deletedTask = taskService.delete(user, id);
-            return ResponseEntity.ok(deletedTask);
+            TaskDto mappedDeletedTask = ObjectMapperUtils.map(deletedTask, TaskDto.class);
+            return ResponseEntity.ok(mappedDeletedTask);
         } catch (ServiceException e) {
             throw new ControllerException(e, ENTITY_CODE);
         } catch (OperationForbiddenException e) {

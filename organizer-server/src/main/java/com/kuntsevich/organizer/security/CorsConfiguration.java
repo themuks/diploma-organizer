@@ -1,4 +1,4 @@
-package com.kuntsevich.organizer;
+package com.kuntsevich.organizer.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

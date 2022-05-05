@@ -4,10 +4,12 @@ import thunk from "redux-thunk";
 import notesReducer from "./notes/reducers";
 import userReducer from "./reducers/auth";
 import messageReducer from "./reducers/message";
+import tasksReducer from "./tasks/reducers";
 
-const middleware = [ thunk ];
+const middleware = [thunk];
 const enhancers = [];
 const reducers = {
+    tasks: tasksReducer,
     notes: notesReducer,
     user: userReducer,
     message: messageReducer

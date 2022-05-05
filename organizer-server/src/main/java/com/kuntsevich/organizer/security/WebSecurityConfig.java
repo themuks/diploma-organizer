@@ -31,6 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
     public static final String ROLE_USER = "ROLE_USER";
+    public static final String ADMIN = "ADMIN";
+    public static final String USER = "USER";
     private final MySqlUserDetailsService userDetailsService;
     private final RoleRepository roleRepository;
     private boolean alreadySetup = false;
@@ -45,8 +47,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/api/login/**", "/api/token/refresh/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/users/**").permitAll();
-        http.authorizeRequests().antMatchers("/api/**").hasAuthority(ROLE_USER);
-        http.authorizeRequests().antMatchers("/**").hasAuthority(ROLE_ADMIN);
+        http.authorizeRequests().antMatchers("/api/**").hasRole(USER);
+        http.authorizeRequests().antMatchers("/**").hasRole(ADMIN);
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(filter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -66,7 +68,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
+        config.addAllowedMethod(HttpMethod.OPTIONS);
+        config.addAllowedMethod(HttpMethod.PATCH);
+        config.addAllowedMethod(HttpMethod.PUT);
+        config.addAllowedMethod(HttpMethod.DELETE);
+        source.registerCorsConfiguration("/**", config);
         return source;
     }
 

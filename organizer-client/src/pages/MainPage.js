@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 
 const MainPage = () => {
-    return (<div className="flex flex-col justify-between h-screen">
+    return (<div className="flex flex-col justify-between h-screen dark:bg-gray-900">
         <NavBar/>
         <Outlet/>
         <Footer/>

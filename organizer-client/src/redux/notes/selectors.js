@@ -14,6 +14,10 @@ export const getNotes = state => {
     return state.notes.notes;
 };
 
+export const getNote = state => {
+    return state.notes.note;
+};
+
 export const getViewState = (state) => {
     if (isLoading(state)) {
         return ViewState.LOADING;

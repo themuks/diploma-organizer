@@ -3,6 +3,7 @@ package com.kuntsevich.organizer.service.impl;
 import com.kuntsevich.organizer.dto.UserRegistrationData;
 import com.kuntsevich.organizer.entity.Role;
 import com.kuntsevich.organizer.entity.User;
+import com.kuntsevich.organizer.exception.EntityNotFoundException;
 import com.kuntsevich.organizer.exception.ServiceException;
 import com.kuntsevich.organizer.exception.UserAlreadyExistException;
 import com.kuntsevich.organizer.repository.RoleRepository;
@@ -22,14 +23,15 @@ import java.util.Optional;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    public static final String ROLE_USER = "USER";
+    public static final String ROLE_USER = "ROLE_USER";
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public User findUserByEmail(String email) throws ServiceException {
+    public User findUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                             .orElseThrow(() -> new ServiceException("User with email = (" + email + ") not found"));
+                             .orElseThrow(
+                                     () -> new EntityNotFoundException("User with email = (" + email + ") not found"));
     }
 
     @Override
@@ -38,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User signUp(UserRegistrationData userRegistrationData) throws ServiceException, UserAlreadyExistException {
+    public User signUp(UserRegistrationData userRegistrationData) throws UserAlreadyExistException {
         String email = userRegistrationData.email();
 
         Optional<User> optionalUser = userRepository.findByEmail(email);
@@ -56,7 +58,7 @@ public class UserServiceImpl implements UserService {
         if (optionalRole.isPresent()) {
             user.setRole(optionalRole.get());
         } else {
-            throw new ServiceException("Role with name = (" + ROLE_USER + ") not found");
+            throw new EntityNotFoundException("Role with name = (" + ROLE_USER + ") not found");
         }
 
         return userRepository.save(user);

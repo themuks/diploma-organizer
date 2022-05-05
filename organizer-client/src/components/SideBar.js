@@ -103,7 +103,7 @@ const SideBar = () => {
                         {/*</li>*/}
                         {/*<li>*/}
                         {/*    <SideBarNavLink to="/notes" icon={<FaStickyNote/>} text={({isActive}) => (*/}
-                        {/*        <SideBarNavLinkText active={isActive} text={t("Notes")}/>*/}
+                        {/*        <SideBarNavLinkText active={isActive} text={t("NoteList")}/>*/}
                         {/*    )}/>*/}
                         {/*</li>*/}
                         {/*<li>*/}

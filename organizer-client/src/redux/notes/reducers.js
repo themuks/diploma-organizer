@@ -1,8 +1,8 @@
-import { CLEAR_ERROR, CREATE_NOTE, FETCH_NOTES, HIDE_LOADER, SET_ERROR, SHOW_LOADER } from "./types";
+import { CLEAR_ERROR, CREATE_NOTE, FETCH_NOTE, FETCH_NOTES, HIDE_LOADER, SET_ERROR, SHOW_LOADER } from "./types";
 
 const initialState = {
     notes: [],
-    isLoading: true,
+    isLoading: false,
     hasError: false,
     errorMessage: ""
 };
@@ -16,6 +16,11 @@ const notesReducer = (state = initialState, action) => {
                 ...state,
                 notes: [ ...state.notes, payload ]
             };
+        case FETCH_NOTE:
+            return {
+                ...state,
+                note: payload
+            }
         case FETCH_NOTES:
             return {
                 ...state,

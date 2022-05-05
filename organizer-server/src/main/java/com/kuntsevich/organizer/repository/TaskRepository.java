@@ -8,6 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface TaskRepository extends PagingAndSortingRepository<Task, Long> {
 
-    Page<Task> findByUser(User user, Pageable pageable);
+    Page<Task> findByUserOrderByTaskStatusAscUpdatedAtDesc(User user, Pageable pageable);
 
 }

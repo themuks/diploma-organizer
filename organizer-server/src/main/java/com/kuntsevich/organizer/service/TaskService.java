@@ -12,10 +12,14 @@ public interface TaskService {
 
     Task delete(User user, Long id) throws ServiceException, OperationForbiddenException;
 
-    Task create(Task task) throws ServiceException;
+    Task create(User user, Task task) throws ServiceException;
 
     List<Task> findUserTasks(User user, Pageable pageable) throws ServiceException;
 
-    Task updateUserTask(User user, Task task) throws ServiceException, OperationForbiddenException;
+    Task findUserTask(User user, Long id) throws ServiceException, OperationForbiddenException;
+
+    Task update(User user, Long id, Task task) throws ServiceException, OperationForbiddenException;
+
+    Task partialUpdate(User user, Long id, Task task) throws ServiceException, OperationForbiddenException;
 
 }

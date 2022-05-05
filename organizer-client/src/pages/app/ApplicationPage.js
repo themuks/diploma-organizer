@@ -4,7 +4,7 @@ import SideBar from "../../components/SideBar";
 import SubpageLayout from "../../components/SubpageLayout";
 
 function ApplicationPage() {
-    return (<div className="flex h-full">
+    return (<div className="flex mb-auto justify-start w-full dark:bg-gray-900">
             <SideBar/>
             <SubpageLayout>
                 <Outlet/>

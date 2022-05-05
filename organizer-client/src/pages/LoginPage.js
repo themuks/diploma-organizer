@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import Login from "../../components/Login";
+import Login from "../components/Login";
 
 const Input = ({ label, name, register, type = "text", required }) => (
     <>

@@ -18,7 +18,7 @@
       "Profile": "Profile",
       "Settings": "Settings",
       "SignOut": "Sign Out",
-      "Copyright": "All rights are protected",
+      "Copyright": "All Rights Reserved",
       "CreateTask": "New task",
       "CreateReminder": "New reminder",
       "NoNotes": "Please create a note",
@@ -28,7 +28,14 @@
       "Title": "Title",
       "Text": "Text",
       "Error": "Error",
-      "ErrorMessage": "Some error occurred"
+      "ErrorMessage": "Some error occurred",
+      "CreateNote": "New note",
+      "Create": "Create",
+      "Saving": "Saving...",
+      "Creating": "Creating...",
+      "Delete": "Delete",
+      "Deleting": "Deleting...",
+      "PleaseEnterValue": "Please enter a {{value}}"
     }
   },
   "ru": {

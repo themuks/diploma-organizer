@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaUser } from "react-icons/fa";
 
@@ -20,10 +20,11 @@ function NavBarNavLinkText({ active, text }) {
 }
 
 function NavBar() {
+    const location = useLocation();
     const { t, i18n } = useTranslation();
 
     return (
-        <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 shadow">
+        <header className="bg-white border-b border-gray-200 dark:border-gray-600 px-2 sm:px-4 py-2.5 dark:bg-gray-800">
             <div className="container flex flex-wrap justify-between items-center mx-auto">
                 <Link to="/app">
                     <img
@@ -50,10 +51,10 @@ function NavBar() {
                             placeholder={t("Search")}/>
                     </div>
                 </div>
-                <div className="flex items-center md:order-3">
+                <div className="flex items-center md:order-2">
                     <button
                         type="button"
-                        className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                        className="flex mr-3 text-sm bg-gray-900 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                         id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                         <span className="sr-only">{t("OpenUserMenu")}</span>
                         <FaUser
@@ -71,11 +72,13 @@ function NavBar() {
                             <li>
                                 <Link
                                     to="/profile"
+                                    state={{ backgroundLocation: location }}
                                     className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{t("Profile")}</Link>
                             </li>
                             <li>
                                 <Link
                                     to="/settings"
+                                    state={{ backgroundLocation: location }}
                                     className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{t("Settings")}</Link>
                             </li>
                             <li>
@@ -121,7 +124,7 @@ function NavBar() {
                 {/*    </ul>*/}
                 {/*</div>*/}
             </div>
-        </nav>
+        </header>
     );
 }
 

@@ -1,20 +1,26 @@
 import React, { useEffect } from "react";
-import Notes from "../../../components/notes/Notes";
+import NoteList from "../../../components/notes/NoteList";
 import { useDispatch, useSelector } from "react-redux";
 import NoData from "../../../components/NoData";
 import { getNotes, getViewState, ViewState } from "../../../redux/notes/selectors";
 import * as actions from "../../../redux/notes/actions";
 import Alert from "../../../components/Alert";
 import Spinner from "../../../components/Spinner";
+import Button from "../../../components/form/Button";
+import { useTranslation } from "react-i18next";
+import { Link, useNavigate } from "react-router-dom";
+import Card from "../../../components/Card";
 
 const NotesPage = () => {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const viewState = useSelector(getViewState);
     const notes = useSelector(getNotes);
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(actions.getNotes());
-    }, [ dispatch ]);
+    }, [dispatch]);
 
     switch (viewState) {
         case ViewState.LOADING:
@@ -24,7 +30,14 @@ const NotesPage = () => {
         case ViewState.NO_DATA:
             return <NoData/>;
         default:
-            return <Notes notes={notes}/>;
+            return <Card>
+                <div className="flex flex-row-reverse justify-between p-4">
+                    <Link to="new">
+                        <Button text={t("CreateNote")}/>
+                    </Link>
+                </div>
+                <NoteList notes={notes}/>
+            </Card>;
     }
 };
 

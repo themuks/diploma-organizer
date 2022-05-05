@@ -9,23 +9,23 @@ class NotesService {
         this.#resourceName = "notes";
     }
 
-    getNotes() {
+    getAll() {
         return axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/${this.#resourceName}`, { headers: authHeader() });
     }
 
-    getNote(id) {
+    getById(id) {
         return axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/${this.#resourceName}/${id}`, { headers: authHeader() });
     }
 
-    createNote(data) {
+    create(data) {
         return axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/${this.#resourceName}/`, data, { headers: authHeader() });
     }
 
-    updateNote(id, data) {
+    update(id, data) {
         return axios.patch(`${process.env.REACT_APP_BACKEND_API_URL}/${this.#resourceName}/${id}`, data, { headers: authHeader() });
     }
 
-    deleteNote(id) {
+    delete(id) {
         return axios.delete(`${process.env.REACT_APP_BACKEND_API_URL}/${this.#resourceName}/${id}`, { headers: authHeader() });
     }
 

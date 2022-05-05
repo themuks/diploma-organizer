@@ -28,7 +28,7 @@ public class UserController {
         try {
             return ResponseEntity.ok(userService.findAll());
         } catch (ServiceException e) {
-            throw new ControllerException("Error while signing up a new user", ENTITY_CODE);
+            throw new ControllerException("Error while signing up a new user", e, ENTITY_CODE);
         }
     }
 
@@ -39,7 +39,7 @@ public class UserController {
         try {
             userService.signUp(userRegistrationData);
         } catch (ServiceException e) {
-            throw new ControllerException("Error while signing up a new user", ENTITY_CODE);
+            throw new ControllerException("Error while signing up a new user", e, ENTITY_CODE);
         } catch (UserAlreadyExistException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
