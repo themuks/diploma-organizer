@@ -28,10 +28,17 @@ const NotesPage = () => {
         case ViewState.ERROR:
             return <Alert/>;
         case ViewState.NO_DATA:
-            return <NoData/>;
+            return <Card>
+                <div className="flex p-4">
+                    <Link to="new">
+                        <Button text={t("CreateNote")}/>
+                    </Link>
+                </div>
+                <NoData/>
+            </Card>;
         default:
             return <Card>
-                <div className="flex flex-row-reverse justify-between p-4">
+                <div className="flex p-4">
                     <Link to="new">
                         <Button text={t("CreateNote")}/>
                     </Link>

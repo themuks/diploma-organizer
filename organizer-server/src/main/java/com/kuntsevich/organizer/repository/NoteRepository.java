@@ -1,8 +1,7 @@
 package com.kuntsevich.organizer.repository;
 
-import com.kuntsevich.organizer.entity.Note;
-import com.kuntsevich.organizer.entity.Task;
-import com.kuntsevich.organizer.entity.User;
+import com.kuntsevich.organizer.model.Note;
+import com.kuntsevich.organizer.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;

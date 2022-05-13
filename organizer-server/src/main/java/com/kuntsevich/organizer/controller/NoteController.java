@@ -1,11 +1,11 @@
 package com.kuntsevich.organizer.controller;
 
-import com.kuntsevich.organizer.entity.Note;
-import com.kuntsevich.organizer.entity.User;
 import com.kuntsevich.organizer.exception.ApiResponse;
 import com.kuntsevich.organizer.exception.ControllerException;
 import com.kuntsevich.organizer.exception.OperationForbiddenException;
 import com.kuntsevich.organizer.exception.ServiceException;
+import com.kuntsevich.organizer.model.Note;
+import com.kuntsevich.organizer.model.User;
 import com.kuntsevich.organizer.service.NoteService;
 import com.kuntsevich.organizer.service.UserService;
 import lombok.RequiredArgsConstructor;

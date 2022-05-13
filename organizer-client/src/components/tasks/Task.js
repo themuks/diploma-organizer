@@ -15,7 +15,7 @@ function CheckButton({ isChecked, isLoading, onClick }) {
 
 const Task = ({ task, isCompleted, isLoading = false, isDeleteLoading = false, onChangeTaskStatus, onTaskDelete }) => {
     return (
-        <li className={`${isCompleted ? "opacity-50" : ""} flex items-center gap-4 w-full relative box-border p-4 hover:bg-gray-100`}>
+        <li className={`${isCompleted ? "opacity-50" : ""} flex items-center gap-4 w-full relative box-border p-4 hover:bg-gray-100`} draggable="true">
             <div
                 className={`${isCompleted ? "before:absolute before:block before:w-full before:border-gray-800 before:border-b-[2px] before:opacity-75" : ""} w-full relative flex flex-grow-1 items-center gap-4`}>
                 <CheckButton

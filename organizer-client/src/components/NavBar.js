@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaUser } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../redux/user/selectors";
+import * as actions from "../redux/user/actions";
 
 function NavBarNavLink({ to, text }) {
     return <NavLink to={to}>
@@ -22,6 +25,12 @@ function NavBarNavLinkText({ active, text }) {
 function NavBar() {
     const location = useLocation();
     const { t, i18n } = useTranslation();
+    const user = useSelector(getUser);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(actions.fetchUser());
+    }, [dispatch, location]);
 
     return (
         <header className="bg-white border-b border-gray-200 dark:border-gray-600 px-2 sm:px-4 py-2.5 dark:bg-gray-800">
@@ -33,7 +42,9 @@ function NavBar() {
                         alt={t("Logo")}
                     ></img>
                 </Link>
-                <div className="flex md:order-1">
+
+                <div
+                    className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1">
                     <div className="hidden relative mr-3 md:mr-0 md:block">
                         <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                             <svg
@@ -51,6 +62,7 @@ function NavBar() {
                             placeholder={t("Search")}/>
                     </div>
                 </div>
+
                 <div className="flex items-center md:order-2">
                     <button
                         type="button"
@@ -63,27 +75,40 @@ function NavBar() {
                     <div
                         className="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                         id="dropdown">
-                        <div className="py-3 px-4">
-                            <span className="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
+                        {user && <div className="py-3 px-4">
                             <span
-                                className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
-                        </div>
+                                className="block text-sm text-gray-900 dark:text-white">{user.name} {user.surname}</span>
+                            <span
+                                className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">{user.email}</span>
+                        </div>}
                         <ul className="py-1" aria-labelledby="dropdown">
                             <li>
                                 <Link
-                                    to="/profile"
+                                    to="/app/profile"
                                     state={{ backgroundLocation: location }}
                                     className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{t("Profile")}</Link>
                             </li>
                             <li>
                                 <Link
-                                    to="/settings"
+                                    to="/app/settings"
                                     state={{ backgroundLocation: location }}
                                     className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{t("Settings")}</Link>
                             </li>
+                            <li className="relative">
+                                <Link
+                                    to="/app/upgrade"
+                                    state={{ backgroundLocation: location }}
+                                    className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{t("Upgrade")}</Link>
+                                <span className="flex absolute h-3 w-3 top-1/2 right-1 -mt-1.5 mr-3">
+                                  <span
+                                      className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                                  <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                                </span>
+                            </li>
                             <li>
                                 <Link
-                                    to="/signOut"
+                                    to="/logout"
+                                    state={{ backgroundLocation: location }}
                                     className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{t("SignOut")}</Link>
                             </li>
                         </ul>
@@ -123,9 +148,31 @@ function NavBar() {
                 {/*        </li>*/}
                 {/*    </ul>*/}
                 {/*</div>*/}
+
+                <div
+                    className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
+                    id="mobile-menu-3">
+                    <div className="relative mt-3 md:hidden">
+                        <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                            <svg
+                                className="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    fillRule="evenodd"
+                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                    clipRule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <input
+                            type="text" id="email-address-icon"
+                            className="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder={t("Search")}/>
+                    </div>
+                </div>
             </div>
         </header>
-    );
+    )
+        ;
 }
 
 export default NavBar;

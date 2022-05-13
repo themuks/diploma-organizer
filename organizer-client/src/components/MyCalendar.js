@@ -9,21 +9,29 @@ const localizer = momentLocalizer(moment);
 
 const DndCalendar = withDragAndDrop(Calendar);
 
-const myEventsList = [
-    { start: new Date(), end: new Date(), title: "special event" }
-];
-
-const MyCalendar = props => {
+const MyCalendar = ({
+                        events,
+                        onEventDrop,
+                        onEventResize,
+                        eventPropGetter,
+                        onDropFromOutside,
+                        onDragOver,
+                        dragFromOutsideItem
+                    }) => {
     return (
-        <div>
-            <DndCalendar
-                localizer={localizer}
-                events={myEventsList}
-                startAccessor="start"
-                endAccessor="end"
-                style={{ height: "500px" }}
-            />
-        </div>
+        <DndCalendar
+            localizer={localizer}
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+            draggableAccessor="isDraggable"
+            onEventDrop={onEventDrop}
+            onEventResize={onEventResize}
+            eventPropGetter={eventPropGetter}
+            onDropFromOutside={onDropFromOutside}
+            onDragOver={onDragOver} dragFromOutsideItem={dragFromOutsideItem}
+            style={{ width: "100%", height: "100%" }}
+        />
     );
 };
 

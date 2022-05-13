@@ -25,7 +25,7 @@ const TaskCreatePage = () => {
         }).finally(() => {
             setIsLoading(() => false);
             // dispatch(actions.fetchTasks());
-            navigate("/tasks");
+            navigate("tasks");
         });
     };
 

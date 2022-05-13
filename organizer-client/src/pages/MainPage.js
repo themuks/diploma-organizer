@@ -6,7 +6,9 @@ import NavBar from "../components/NavBar";
 const MainPage = () => {
     return (<div className="flex flex-col justify-between h-screen dark:bg-gray-900">
         <NavBar/>
-        <Outlet/>
+        <main className="flex flex-col gap-4 flex-grow max-w-full">
+            <Outlet/>
+        </main>
         <Footer/>
     </div>);
 };

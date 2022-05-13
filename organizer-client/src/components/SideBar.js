@@ -25,7 +25,7 @@ const SideBar = () => {
 
     return (
         <aside aria-label="Sidebar">
-            <div className="overflow-y-auto m-4 py-4 px-4 bg-gray-50 rounded dark:bg-gray-800">
+            <div className="overflow-y-auto mt-4 ml-4 mb-4 p-4 bg-gray-50 rounded dark:bg-gray-800">
                 <ul className="space-y-2">
                     <IconContext.Provider
                         value={{ className: "flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" }}

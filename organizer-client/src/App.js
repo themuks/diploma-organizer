@@ -1,10 +1,9 @@
 import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import WelcomePage from "./pages/welcome/WelcomePage";
-import HomePage from "./pages/app/ApplicationPage";
+import ApplicationPage from "./pages/app/ApplicationPage";
 import DashboardPage from "./pages/app/DashboardPage";
 import TasksPage from "./pages/app/tasks/TasksPage";
-import RemindersPage from "./pages/app/RemindersPage";
 import NotesPage from "./pages/app/notes/NotesPage";
 import NoteDetailsPage from "./pages/app/notes/NoteDetailsPage";
 import CalendarPage from "./pages/app/CalendarPage";
@@ -17,25 +16,35 @@ import NoteCreatePage from "./pages/app/notes/NoteCreatePage";
 import TaskCreatePage from "./pages/app/tasks/TaskCreatePage";
 import TaskDetailsPage from "./pages/app/tasks/TaskDetailsPage";
 import SettingsPage from "./pages/SettingsPage";
+import RemindersPage from "./pages/app/reminders/RemindersPage";
+import SignOutPage from "./pages/SignOutPage";
+import AuthVerify from "./components/AuthVerify";
+import * as actions from "./redux/user/actions";
+
 
 function App() {
-    let location = useLocation();
-
+    const location = useLocation();
+    const dispatch = useDispatch();
     let state = location.state;
+
+    const logout = () => {
+        dispatch(actions.logout());
+    };
 
     return (<>
             {state?.backgroundLocation && (
                 <Routes>
-                    <Route path="/tasks/:id" element={<TaskDetailsPage/>}/>
-                    <Route path="/tasks/new" element={<TaskCreatePage/>}/>
-                    <Route path="/profile" element={<ProfilePage/>}/>
-                    <Route path="/settings" element={<SettingsPage/>}/>
+                    <Route path="/app/tasks/:id" element={<TaskDetailsPage/>}/>
+                    <Route path="/app/tasks/new" element={<TaskCreatePage/>}/>
+                    <Route path="/app/profile" element={<ProfilePage/>}/>
+                    <Route path="/app/settings" element={<SettingsPage/>}/>
+                    <Route path="/logout" element={<SignOutPage/>}/>
                 </Routes>
             )}
             <Routes location={state?.backgroundLocation || location}>
                 <Route path="/" element={<MainPage/>}>
                     <Route path="welcome" element={<WelcomePage/>}/>
-                    <Route element={<HomePage/>}>
+                    <Route path="app" element={<ApplicationPage/>}>
                         <Route path="dashboard" element={<DashboardPage/>}/>
                         <Route path="tasks" element={<TasksPage/>}/>
                         <Route path="reminders" element={<RemindersPage/>}/>
@@ -48,7 +57,7 @@ function App() {
                     </Route>
                     <Route path="login" element={<LoginPage/>}/>
                     <Route path="signUp" element={<SignUpPage/>}/>
-                    <Route path="*" element={<Navigate to="/app"/>}/>
+                    <Route path="*" element={<Navigate to="/app/dashboard" replace={true}/>}/>
                 </Route>
                 <Route
                     path="*"
@@ -58,15 +67,9 @@ function App() {
                     </main>}
                 />
             </Routes>
+            <AuthVerify logOut={logout}/>
         </>
     );
 }
 
-function mapStateToProps(state) {
-    const { user } = state.user;
-    return {
-        user
-    };
-}
-
-export default connect(mapStateToProps)(App);
+export default App;

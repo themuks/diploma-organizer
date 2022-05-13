@@ -1,9 +1,9 @@
 package com.kuntsevich.organizer.service.impl;
 
-import com.kuntsevich.organizer.entity.Note;
-import com.kuntsevich.organizer.entity.User;
 import com.kuntsevich.organizer.exception.EntityNotFoundException;
 import com.kuntsevich.organizer.exception.OperationForbiddenException;
+import com.kuntsevich.organizer.model.Note;
+import com.kuntsevich.organizer.model.User;
 import com.kuntsevich.organizer.repository.NoteRepository;
 import com.kuntsevich.organizer.service.NoteService;
 import lombok.RequiredArgsConstructor;

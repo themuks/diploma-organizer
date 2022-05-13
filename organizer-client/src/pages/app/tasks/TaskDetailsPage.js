@@ -40,7 +40,7 @@ const TaskDetailsPage = () => {
         }).finally(() => {
             setIsDeleting(false);
             // dispatch(actions.fetchTasks());
-            navigate("/tasks");
+            navigate("tasks");
         });
     };
 

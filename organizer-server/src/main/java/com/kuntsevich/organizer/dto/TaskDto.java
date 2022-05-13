@@ -1,11 +1,9 @@
 package com.kuntsevich.organizer.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kuntsevich.organizer.entity.Priority;
-import com.kuntsevich.organizer.entity.Regularity;
-import com.kuntsevich.organizer.entity.TaskStatus;
+import com.kuntsevich.organizer.model.enumerated.Priority;
+import com.kuntsevich.organizer.model.enumerated.Regularity;
+import com.kuntsevich.organizer.model.enumerated.TaskStatus;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
@@ -21,6 +19,7 @@ public class TaskDto {
     private LocalDateTime dueTime;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private Long taskComplexityInHours;
     @Enumerated
     private Priority priority = Priority.NO_PRIORITY;
     @Enumerated

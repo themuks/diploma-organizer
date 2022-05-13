@@ -24,7 +24,7 @@ const NoteForm = ({ errors, isNew = false, isLoading = false, onSubmit, onDelete
                 className={!errors.text ? "mb-6" : ""}
                 isError={errors.text} label={t("Text")} name="text" register={register} required/>
             {errors.text && <ValidationErrorMessage text={t("ValidationErrorRequired")}/>}
-            <div className="flex gap-4">
+            <div className="flex flex-row-reverse gap-4">
                 {!isNew && <Button
                     className="ml-auto"
                     color="red"

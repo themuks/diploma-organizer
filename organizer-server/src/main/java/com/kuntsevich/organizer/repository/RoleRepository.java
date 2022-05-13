@@ -1,6 +1,6 @@
 package com.kuntsevich.organizer.repository;
 
-import com.kuntsevich.organizer.entity.Role;
+import com.kuntsevich.organizer.model.Role;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

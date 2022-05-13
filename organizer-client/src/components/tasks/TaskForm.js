@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import ValidationErrorMessage from "../form/ValidationErrorMessage";
 import Button from "../form/Button";
 import Input from "../form/Input";
 import Select from "../form/Select";
+import moment from "moment";
+import { useLocation } from "react-router-dom";
+import TextArea from "../form/TextArea";
 
 
 const TaskForm = ({
@@ -15,7 +18,15 @@ const TaskForm = ({
                       onDelete,
                       register
                   }) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
+    const location = useLocation();
+    const [minDateTime, setMinDateTime] = useState(moment().toISOString().substring(0, moment().toISOString().lastIndexOf(":")));
+    const [minDueDate, setMinDueDate] = useState(moment().toISOString().substring(0, moment().toISOString().lastIndexOf(":")));
+
+    const onStartDateTimeChange = (event) => {
+        console.log(event);
+        setMinDueDate(event.target.value.substring(0, moment().toISOString().lastIndexOf("T")));
+    };
 
     const priorityOptions = [
         {
@@ -68,7 +79,7 @@ const TaskForm = ({
             {errors.title && <ValidationErrorMessage
                 className="mb-6"
                 text={t("ValidationErrorRequired")}/>}
-            <Input
+            <TextArea
                 className={!errors.description ? "mb-6" : ""}
                 isError={errors.description} label={t("Description")} type="text" name="description" register={register}
                 placeholder={t("PleaseEnterValue", { value: t("Description").toLowerCase() })}
@@ -77,8 +88,26 @@ const TaskForm = ({
                 className="mb-6"
                 text={t("ValidationErrorRequired")}/>}
             <Input
+                className={!errors.startTime ? "mb-6" : ""}
+                isError={errors.startTime} label={t("StartTime")} type="datetime-local" name="startTime"
+                register={register}
+                minDate={minDateTime}
+                onChange={onStartDateTimeChange}
+                placeholder={t("PleaseEnterValue", { value: t("StartTime").toLowerCase() })}
+            />
+            <Input
+                className={!errors.taskComplexityInHours ? "mb-6" : ""}
+                isError={errors.taskComplexityInHours} label={t("TaskComplexity")} type="number"
+                name="taskComplexityInHours" register={register} max={8}
+                placeholder={t("PleaseEnterValue", { value: t("TaskComplexity").toLowerCase() })}
+            />
+            {errors.taskComplexityInHours && <ValidationErrorMessage
+                className="mb-6"
+                text={t("ValidationMaxValue", { value: 8 })}/>}
+            <Input
                 className={!errors.dueTime ? "mb-6" : ""}
                 isError={errors.dueTime} label={t("DueDate")} type="date" name="dueTime" register={register}
+                minDate={minDueDate}
                 placeholder={t("PleaseEnterValue", { value: t("DueDate").toLowerCase() })}
             />
             {errors.dueTime && <ValidationErrorMessage
@@ -104,17 +133,8 @@ const TaskForm = ({
             {errors.regularity && <ValidationErrorMessage
                 className="mb-6"
                 text={t("ValidationErrorRequired")}/>}
-            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                {!isNew && <Button
-                    className="ml-auto"
-                    color="red"
-                    type="button" isLoading={isDeleting}
-                    onClick={onDelete}
-                    text={isDeleting
-                        ? t("Deleting")
-                        : t("Delete")}/>}
+            <div className="flex flex-row-reverse gap-4">
                 <Button
-                    className={isNew && "ml-auto"}
                     type="submit" isLoading={isSaving}
                     text={isNew
                         ? isSaving
@@ -123,6 +143,13 @@ const TaskForm = ({
                         : isSaving
                             ? t("Saving")
                             : t("Save")}/>
+                {!isNew && <Button
+                    color="red"
+                    type="button" isLoading={isDeleting}
+                    onClick={onDelete}
+                    text={isDeleting
+                        ? t("Deleting")
+                        : t("Delete")}/>}
             </div>
         </form>);
 };

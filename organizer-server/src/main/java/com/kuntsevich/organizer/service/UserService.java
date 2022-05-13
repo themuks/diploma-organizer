@@ -1,9 +1,9 @@
 package com.kuntsevich.organizer.service;
 
-import com.kuntsevich.organizer.dto.UserRegistrationData;
-import com.kuntsevich.organizer.entity.User;
+import com.kuntsevich.organizer.dto.UserRegistrationDataDto;
 import com.kuntsevich.organizer.exception.ServiceException;
 import com.kuntsevich.organizer.exception.UserAlreadyExistException;
+import com.kuntsevich.organizer.model.User;
 
 import java.util.List;
 
@@ -13,6 +13,10 @@ public interface UserService {
 
     List<User> findAll() throws ServiceException;
 
-    User signUp(UserRegistrationData userRegistrationData) throws ServiceException, UserAlreadyExistException;
+    User update(User user) throws ServiceException;
+
+    User signUp(UserRegistrationDataDto userRegistrationDataDto) throws ServiceException, UserAlreadyExistException;
+
+    boolean activateAccount(Long id, String secretCode) throws ServiceException;
 
 }

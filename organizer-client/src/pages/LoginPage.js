@@ -1,29 +1,27 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import Login from "../components/Login";
-
-const Input = ({ label, name, register, type = "text", required }) => (
-    <>
-        <label>{label}</label>
-        <input type={type} {...register(name, { required })} />
-    </>
-);
+import Modal from "../components/Modal";
+import { useDispatch } from "react-redux";
+import * as actions from "../redux/user/actions";
+import { useNavigate } from "react-router-dom";
+import LoginForm from "../components/user/LoginForm";
 
 function LoginPage() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { t, i18n } = useTranslation();
+
+    const onSubmit = user => {
+        const onSuccessCallback = () => {
+            navigate("/app", { replace: true });
+        };
+        dispatch(actions.login(user, onSuccessCallback));
+    };
 
     return (
-        // <form onSubmit={handleSubmit(onSubmit)}>
-        //     <Input label={t("Email")} name="email" register={register} required/>
-        //     <Input label={t("Password")} name="password" type="password" register={register} required/>
-        //     <label>{t("RememberMe")}</label>
-        //     <input type="checkbox" {...register("remember-me", {required: true})}/>
-        //     {/*{errors.exampleRequired && <span>This field is required</span>}*/}
-        //     <input type="submit"/>
-        // </form>
-        <Login/>
+        <Modal closeButtonVisible={false}>
+            <LoginForm onSubmit={handleSubmit(onSubmit)} register={register} errors={errors}/>
+        </Modal>
     );
 }
 

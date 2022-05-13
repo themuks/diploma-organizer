@@ -1,12 +1,12 @@
 package com.kuntsevich.organizer.controller;
 
 import com.kuntsevich.organizer.dto.TaskDto;
-import com.kuntsevich.organizer.entity.Task;
-import com.kuntsevich.organizer.entity.User;
 import com.kuntsevich.organizer.exception.ApiResponse;
 import com.kuntsevich.organizer.exception.ControllerException;
 import com.kuntsevich.organizer.exception.OperationForbiddenException;
 import com.kuntsevich.organizer.exception.ServiceException;
+import com.kuntsevich.organizer.model.Task;
+import com.kuntsevich.organizer.model.User;
 import com.kuntsevich.organizer.service.TaskService;
 import com.kuntsevich.organizer.service.UserService;
 import com.kuntsevich.organizer.util.ObjectMapperUtils;
@@ -172,6 +172,27 @@ public class TaskController {
             ApiResponse apiResponse =
                     new ApiResponse(e.getLocalizedMessage(), HttpServletResponse.SC_FORBIDDEN + ENTITY_CODE);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(apiResponse);
+        }
+    }
+
+    @PostMapping("/schedule")
+    public ResponseEntity<List<TaskDto>> scheduleTasks(Authentication authentication) {
+        String email = authentication.getName();
+        User user;
+
+        try {
+            user = userService.findUserByEmail(email);
+        } catch (ServiceException e) {
+            throw new ControllerException(e, ENTITY_CODE);
+        }
+
+
+        try {
+            List<Task> plannedTasks = taskService.planTasks(user);
+            List<TaskDto> tasks = ObjectMapperUtils.mapAll(plannedTasks, TaskDto.class);
+            return ResponseEntity.ok(tasks);
+        } catch (ServiceException e) {
+            throw new ControllerException(e, ENTITY_CODE);
         }
     }
 

@@ -1,13 +1,12 @@
 package com.kuntsevich.organizer.service;
 
-import com.kuntsevich.organizer.entity.Note;
-import com.kuntsevich.organizer.entity.User;
 import com.kuntsevich.organizer.exception.OperationForbiddenException;
 import com.kuntsevich.organizer.exception.ServiceException;
+import com.kuntsevich.organizer.model.Note;
+import com.kuntsevich.organizer.model.User;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface NoteService {
 
