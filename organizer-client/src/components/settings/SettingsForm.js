@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import ValidationErrorMessage from "../form/ValidationErrorMessage";
 import Button from "../form/Button";
 import Select from "../form/Select";
+import Input from "../form/Input";
 
 
 const SettingsForm = ({
@@ -16,49 +17,45 @@ const SettingsForm = ({
 
     const priorityOptions = [
         {
-            value: "NO_PRIORITY",
-            text: t("NoPriority")
+            value: "NO_GOAL",
+            text: t("NoGoal")
         },
         {
-            value: "LOW",
-            text: t("Low")
+            value: "DO_PRIORITIES",
+            text: t("DoPriorities")
         },
         {
-            value: "MEDIUM",
-            text: t("Medium")
-        },
-        {
-            value: "HIGH",
-            text: t("High")
+            value: "DO_MORE_TASKS",
+            text: t("DoMoreTasks")
         }
     ];
 
     const themeOptions = [
         {
-            value: "System theme",
+            value: "AUTO",
             text: t("SystemTheme")
         },
         {
-            value: "Light",
+            value: "LIGHT",
             text: t("Light")
         },
         {
-            value: "Dark",
+            value: "DARK",
             text: t("Dark")
         }
     ];
 
     const languageOptions = [
         {
-            value: "Default",
+            value: "AUTO",
             text: t("Default")
         },
         {
-            value: "EN",
+            value: "ENGLISH",
             text: t("English")
         },
         {
-            value: "RU",
+            value: "RUSSIAN",
             text: t("Russian")
         }
     ];
@@ -73,6 +70,29 @@ const SettingsForm = ({
                 placeholder={t("PleaseEnterValue", { value: t("Goal").toLowerCase() })}
                 required/>
             {errors.goal && <ValidationErrorMessage
+                className="mb-6"
+                text={t("ValidationErrorRequired")}/>}
+            <Input
+                className={!errors.gapBetweenTasksInMinutes ? "mb-6" : ""}
+                isError={errors.gapBetweenTasksInMinutes} label={t("GapBetweenTasks")} type="number"
+                name="gapBetweenTasksInMinutes" register={register}
+                placeholder={t("PleaseEnterValue", { value: t("GapBetweenTasks").toLowerCase() })} required/>
+            {errors.gapBetweenTasksInMinutes && <ValidationErrorMessage
+                className="mb-6"
+                text={t("ValidationErrorRequired")}/>}
+            <Input
+                className={!errors.workStartTime ? "mb-6" : ""}
+                isError={errors.workStartTime} label={t("WorkStartTime")} type="time" name="workStartTime"
+                register={register}
+                placeholder={t("PleaseEnterValue", { value: t("WorkStartTime").toLowerCase() })} required/>
+            {errors.workStartTime && <ValidationErrorMessage
+                className="mb-6"
+                text={t("ValidationErrorRequired")}/>}
+            <Input
+                className={!errors.workEndTime ? "mb-6" : ""}
+                isError={errors.workEndTime} label={t("WorkEndTime")} type="time" name="workEndTime" register={register}
+                placeholder={t("PleaseEnterValue", { value: t("WorkEndTime").toLowerCase() })} required/>
+            {errors.workEndTime && <ValidationErrorMessage
                 className="mb-6"
                 text={t("ValidationErrorRequired")}/>}
             <Select

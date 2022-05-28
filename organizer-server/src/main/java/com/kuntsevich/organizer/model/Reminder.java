@@ -1,6 +1,5 @@
 package com.kuntsevich.organizer.model;
 
-import com.kuntsevich.organizer.model.enumerated.Regularity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,8 +16,9 @@ public class Reminder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime time;
-    private Regularity regularity;
+    private String title;
+    private String description;
+    private LocalDateTime dateTime;
     @ManyToOne(optional = false)
     private User user;
     @CreationTimestamp

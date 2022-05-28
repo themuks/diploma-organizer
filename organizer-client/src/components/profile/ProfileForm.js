@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 const ProfileForm = ({
                          errors,
                          isNew = false,
-                         isLoading: isSaving = false,
+                         isSaving = false,
                          onSubmit,
                          register
                      }) => {
@@ -36,6 +36,7 @@ const ProfileForm = ({
                 className={!errors.email ? "mb-6" : ""}
                 isError={errors.email} label={t("Email")} type="email" name="email" register={register}
                 placeholder={t("PleaseEnterValue", { value: t("Email").toLowerCase() })}
+                disabled
             />
             {errors.email && <ValidationErrorMessage
                 className="mb-6"

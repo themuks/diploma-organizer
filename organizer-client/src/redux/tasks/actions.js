@@ -121,6 +121,15 @@ export const createTask = (task) => (dispatch) => {
         });
 };
 
+export const scheduleTasks = (onSuccessCallBack) => (dispatch) => {
+    return TasksService.schedule().then(
+        () => {
+            onSuccessCallBack();
+            return Promise.resolve();
+        },
+        () => Promise.reject());
+};
+
 export const deleteTask = (task) => (dispatch) => {
     dispatch({
         type: CLEAR_DELETE_ERROR

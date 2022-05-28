@@ -6,7 +6,7 @@ import NoData from "../NoData";
 const TaskList = ({ tasks, onChangeTaskStatus, onTaskDelete }) => {
     const location = useLocation();
 
-    return (<ul className="flex flex-col divide-y">
+    return (<ul className="flex flex-col divide-y dark:divide-gray-700 min-w-max">
         {!tasks.length && <NoData/>}
         {tasks.map(task =>
             <Link className="box-border" key={task.id} to={`${task.id}`} state={{ backgroundLocation: location }}>

@@ -4,13 +4,9 @@ import com.kuntsevich.organizer.dto.UserRegistrationDataDto;
 import com.kuntsevich.organizer.exception.EntityNotFoundException;
 import com.kuntsevich.organizer.exception.ServiceException;
 import com.kuntsevich.organizer.exception.UserAlreadyExistException;
-import com.kuntsevich.organizer.model.Preferences;
-import com.kuntsevich.organizer.model.Role;
-import com.kuntsevich.organizer.model.User;
+import com.kuntsevich.organizer.model.*;
 import com.kuntsevich.organizer.model.enumerated.ActivityStatus;
-import com.kuntsevich.organizer.repository.PreferencesRepository;
-import com.kuntsevich.organizer.repository.RoleRepository;
-import com.kuntsevich.organizer.repository.UserRepository;
+import com.kuntsevich.organizer.repository.*;
 import com.kuntsevich.organizer.service.EmailService;
 import com.kuntsevich.organizer.service.UserService;
 import com.kuntsevich.organizer.util.ObjectMapperUtils;
@@ -21,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +31,9 @@ public class UserServiceImpl implements UserService {
     private final PreferencesRepository preferencesRepository;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final TaskRepository taskRepository;
+    private final NoteRepository noteRepository;
+    private final ReminderRepository reminderRepository;
     private final PasswordEncoder passwordEncoder;
 
     public User findUserByEmail(String email) {
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User signUp(UserRegistrationDataDto userRegistrationDataDto)
-            throws UserAlreadyExistException, ServiceException {
+            throws UserAlreadyExistException {
         String email = userRegistrationDataDto.getEmail();
 
         Optional<User> optionalUser = userRepository.findByEmail(email);
@@ -110,5 +110,22 @@ public class UserServiceImpl implements UserService {
 
         return false;
     }
+
+    @Override
+    public List<Object> search(User user, String query) {
+        List<Object> results = new ArrayList<>();
+
+        List<Task> tasks = taskRepository.search(user, query);
+        results.addAll(tasks);
+
+        List<Note> notes = noteRepository.search(user, query);
+        results.addAll(notes);
+
+        List<Reminder> reminders = reminderRepository.search(user, query);
+        results.addAll(reminders);
+
+        return results;
+    }
+
 
 }

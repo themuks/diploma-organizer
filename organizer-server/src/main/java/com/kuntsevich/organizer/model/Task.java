@@ -1,7 +1,6 @@
 package com.kuntsevich.organizer.model;
 
 import com.kuntsevich.organizer.model.enumerated.Priority;
-import com.kuntsevich.organizer.model.enumerated.Regularity;
 import com.kuntsevich.organizer.model.enumerated.TaskStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,10 +28,6 @@ public class Task {
     private Priority priority = Priority.NO_PRIORITY;
     @Enumerated
     private TaskStatus taskStatus = TaskStatus.TO_DO;
-    @Enumerated
-    private Regularity regularity = Regularity.NOT_REGULAR;
-    @ManyToOne
-    private TaskList taskList;
     @ManyToOne(optional = false)
     private User user;
     @CreationTimestamp

@@ -15,7 +15,7 @@ const LoginForm = ({
     const { t } = useTranslation();
 
     return (<>
-        <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">{t("SignIn")}</h3>
+        <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-gray-300">{t("SignIn")}</h3>
         <form className="flex flex-col" onSubmit={onSubmit} autoComplete="off">
             <Input
                 className={!errors.email ? "mb-6" : ""}

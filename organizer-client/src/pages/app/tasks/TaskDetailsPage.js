@@ -6,8 +6,8 @@ import TasksService from "../../../services/tasks.service";
 import TaskForm from "../../../components/tasks/TaskForm";
 import Spinner from "../../../components/Spinner";
 import Modal from "../../../components/Modal";
-import * as actions from "../../../redux/tasks/actions";
 import { useDispatch } from "react-redux";
+import moment from "moment";
 
 const TaskDetailsPage = () => {
     const navigate = useNavigate();
@@ -49,7 +49,9 @@ const TaskDetailsPage = () => {
         setIsLoading(true);
         TasksService.getById(id).then((response) => {
             const task = response.data;
-            task.dueTime = task.dueTime?.split("T")[0];
+            task.dueTime = task.dueTime ? task.dueTime?.split("T")[0] : task.dueTime;
+            task.startTime = task.startTime ? moment(task.startTime).toISOString().split(".")[0] : task.startTime;
+            console.log(task);
             reset(task);
         }, () => {
             setIsError(true);

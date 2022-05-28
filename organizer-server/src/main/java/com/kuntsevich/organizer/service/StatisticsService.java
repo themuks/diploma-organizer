@@ -7,10 +7,8 @@ import com.kuntsevich.organizer.model.User;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-public interface StatisticService {
+public interface StatisticsService {
 
     UserStatisticsDto formUserStatistics(User user) throws ServiceException;
-
-    Map<LocalDateTime, Long> someMethod(User user) throws ServiceException;
 
 }

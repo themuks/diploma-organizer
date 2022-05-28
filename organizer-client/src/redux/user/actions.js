@@ -2,8 +2,8 @@ import { FETCH_USER, LOGIN_SUCCESS, LOGOUT, REGISTER_SUCCESS } from "./types";
 import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
 
-export const register = ({ email, password }) => (dispatch) => {
-    return AuthService.register(email, password).then(
+export const register = (user) => (dispatch) => {
+    return AuthService.register(user).then(
         (response) => {
             dispatch({
                 type: REGISTER_SUCCESS

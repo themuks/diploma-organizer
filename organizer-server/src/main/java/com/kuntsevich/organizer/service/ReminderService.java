@@ -5,6 +5,7 @@ import com.kuntsevich.organizer.exception.ServiceException;
 import com.kuntsevich.organizer.model.Reminder;
 import com.kuntsevich.organizer.model.User;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

@@ -16,7 +16,6 @@ const NotesPage = () => {
     const dispatch = useDispatch();
     const viewState = useSelector(getViewState);
     const notes = useSelector(getNotes);
-    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(actions.getNotes());

@@ -123,16 +123,6 @@ const TaskForm = ({
             {errors.priority && <ValidationErrorMessage
                 className="mb-6"
                 text={t("ValidationErrorRequired")}/>}
-            <Select
-                className={!errors.regularity
-                    ? "mb-6" : ""}
-                options={regularityOptions}
-                isError={errors.regularity} label={t("Regularity")} name="regularity" register={register}
-                placeholder={t("PleaseEnterValue", { value: t("Regularity").toLowerCase() })}
-                required/>
-            {errors.regularity && <ValidationErrorMessage
-                className="mb-6"
-                text={t("ValidationErrorRequired")}/>}
             <div className="flex flex-row-reverse gap-4">
                 <Button
                     type="submit" isLoading={isSaving}

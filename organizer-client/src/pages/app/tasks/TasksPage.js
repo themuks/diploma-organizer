@@ -13,6 +13,7 @@ import Card from "../../../components/Card";
 import MyCalendar from "../../../components/MyCalendar";
 import TasksService from "../../../services/tasks.service";
 import moment from "moment";
+import Button from "../../../components/form/Button";
 
 const TasksPage = () => {
     const { t } = useTranslation();
@@ -178,19 +179,28 @@ const TasksPage = () => {
         case ViewState.ERROR:
             return <Alert/>;
         default:
-            return <div className="flex place-items-start gap-4 h-full">
-                <Card>
-                    <TaskFastForm
-                        onSubmit={handleSubmit(onSubmit)} isLoading={isTaskCreateLoading} register={register}
-                        errors={errors}/>
-                    <TaskList tasks={tasks} onChangeTaskStatus={onChangeTaskStatus} onTaskDelete={onTaskDelete}/>
-                </Card>
-                <MyCalendar
-                    events={events} onEventDrop={onEventDrop} onEventResize={onEventResize}
-                    eventPropGetter={eventPropGetter} onDropFromOutside={onDropFromOutside}
-                    onDragOver={customOnDragOver} dragFromOutsideItem={
-                    displayDragItemInCell ? dragFromOutsideItem : null
-                }/>
+            return <div className="flex gap-4 h-full">
+                <div className="flex flex-col gap-4">
+                    <Button
+                        onClick={() => {
+                            dispatch(actions.scheduleTasks(() => dispatch(actions.fetchTasks())));
+                        }
+                        } text={t("Schedule")}/>
+                    <Card>
+                        <TaskFastForm
+                            onSubmit={handleSubmit(onSubmit)} isLoading={isTaskCreateLoading} register={register}
+                            errors={errors}/>
+                        <TaskList tasks={tasks} onChangeTaskStatus={onChangeTaskStatus} onTaskDelete={onTaskDelete}/>
+                    </Card>
+                </div>
+                <div className="place-self-stretch w-full">
+                    <MyCalendar
+                        events={events} onEventDrop={onEventDrop} onEventResize={onEventResize}
+                        eventPropGetter={eventPropGetter} onDropFromOutside={onDropFromOutside}
+                        onDragOver={customOnDragOver} dragFromOutsideItem={
+                        displayDragItemInCell ? dragFromOutsideItem : null
+                    }/>
+                </div>
             </div>;
     }
 };

@@ -1,21 +1,52 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "../components/Modal";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
 import SettingsForm from "../components/settings/SettingsForm";
+import PreferencesService from "../services/preferences.service";
+import { useTranslation } from "react-i18next";
 
 function SettingsPage() {
-    const dispatch = useDispatch();
+    const { t, i18n } = useTranslation();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const settings = useSelector(state => state.user.settings);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+    const [isError, setIsError] = useState(false);
+
+    const rawSetTheme = (rawTheme) => {
+        const root = window.document.documentElement;
+        const isDark = rawTheme === "dark";
+
+        root.classList.remove(isDark ? "light" : "dark");
+        root.classList.add(rawTheme);
+
+        localStorage.setItem("color-theme", rawTheme);
+    };
+
+    const onSubmit = preferences => {
+        setIsError(false);
+        setIsSaving(true);
+        PreferencesService.update(preferences).then(() => {
+            i18n.changeLanguage(preferences.language === "RUSSIAN" ? "ru" : "en");
+            rawSetTheme(preferences.theme === "DARK" ? "dark" : "light");
+        }, () => {
+            setIsError(() => true);
+        }).finally(() => {
+            setIsSaving(() => false);
+        });
+    };
 
     useEffect(() => {
-        reset(settings);
-    }, [reset, settings]);
-
-    const onSubmit = settings => {
-        // dispatch(actions.createTask(settings));
-    };
+        setIsError(false);
+        setIsLoading(true);
+        PreferencesService.getCurrentUserPreferences().then((response) => {
+            const preferences = response.data;
+            reset(preferences);
+        }, () => {
+            setIsError(true);
+        }).finally(() => {
+            setIsLoading(false);
+        });
+    }, [reset]);
 
 
     return (<Modal>

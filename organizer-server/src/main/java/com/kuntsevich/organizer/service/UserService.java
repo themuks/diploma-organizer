@@ -19,4 +19,6 @@ public interface UserService {
 
     boolean activateAccount(Long id, String secretCode) throws ServiceException;
 
+    List<Object> search(User user, String query) throws ServiceException;
+
 }

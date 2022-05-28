@@ -10,7 +10,7 @@ public class UserStatisticsDto {
     private Long totalRemindersCreated;
     private Long tasksCreatedLastWeek;
     private Long tasksCompletedLastWeek;
-    private Long tasksCompletedComparedWithPreviousWeek;
+    private Double tasksCompletedComparedWithPreviousWeek;
     private Long workingHoursPending;
 
 }

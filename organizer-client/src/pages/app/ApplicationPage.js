@@ -14,7 +14,7 @@ function ApplicationPage() {
         }
     );
 
-    return (<div className="flex h-full">
+    return (<div className="flex flex-grow gap-4 p-4">
             <SideBar/>
             <SubpageLayout>
                 <Outlet/>

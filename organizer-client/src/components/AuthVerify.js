@@ -20,7 +20,8 @@ const AuthVerify = ({ logout }) => {
             if (user) {
                 const decodedJwt = parseJwt(user.accessToken);
                 if (decodedJwt.exp * 1000 < Date.now()) {
-                    logout();
+                    // logout();
+                    navigate("/login");
                 }
             } else {
                 navigate("/login");

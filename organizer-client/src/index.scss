@@ -32,5 +32,41 @@ $cell-border: #374151 #{!important};
 }
 
 .rbc-button-link {
-    @apply dark:text-white #{!important}
+    @apply dark:text-gray-300 #{!important}
+}
+
+.rbc-day-bg {
+    @apply dark:bg-gray-700 #{!important}
+}
+
+.rbc-off-range-bg {
+    @apply dark:bg-gray-800 #{!important}
+}
+
+.rbc-btn-group {
+    @apply dark:text-gray-300 #{!important}
+}
+
+.rbc-toolbar button {
+    @apply dark:text-gray-300 dark:hover:bg-gray-800 #{!important}
+}
+
+.rbc-toolbar-label {
+    @apply dark:text-gray-300 #{!important}
+}
+
+.rbc-header {
+    @apply dark:text-gray-300 #{!important}
+}
+
+.rbc-active {
+    @apply dark:bg-gray-600 #{!important}
+}
+
+.rbc-label {
+    @apply dark:text-gray-300 #{!important}
+}
+
+.rbc-agenda-table {
+    @apply dark:text-gray-300 #{!important}
 }

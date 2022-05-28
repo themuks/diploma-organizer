@@ -7,6 +7,7 @@ import {
     FETCH_TASKS,
     HIDE_CREATE_LOADER,
     HIDE_DELETE_LOADER,
+    SCHEDULE_TASKS,
     SET_CREATE_ERROR,
     SET_DELETE_ERROR,
     SHOW_CREATE_LOADER,
@@ -37,6 +38,11 @@ const tasksReducer = (state = initialState, action) => {
                 tasks: state.tasks.filter(task => task.id !== payload.id)
             };
         case FETCH_TASKS:
+            return {
+                ...state,
+                tasks: payload
+            };
+        case SCHEDULE_TASKS:
             return {
                 ...state,
                 tasks: payload

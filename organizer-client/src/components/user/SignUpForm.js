@@ -34,7 +34,7 @@ const SignUpForm = ({
     // ];
 
     return (<>
-        <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">{t("SignUp")}</h3>
+        <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-gray-300">{t("SignUp")}</h3>
         <form className="flex flex-col" onSubmit={onSubmit} autoComplete="off">
             <Input
                 className={!errors.name ? "mb-6" : ""}

@@ -1,14 +1,13 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Reminder from "./Reminder";
+import NoData from "../NoData";
 
 const ReminderList = ({ reminders }) => {
-    const location = useLocation();
-
-    return (<ul className="flex flex-col divide-y">
+    return (<ul className="flex flex-col divide-y dark:divide-gray-700">
+        {!reminders.length && <NoData/>}
         {reminders.map(reminder =>
-            <Link
-                className="box-border" key={reminder.id} to={`${reminder.id}`} state={{ backgroundLocation: location }}>
+            <Link key={reminder.id} to={`${reminder.id}`}>
                 <Reminder reminder={reminder}/>
             </Link>
         )}

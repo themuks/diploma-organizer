@@ -30,7 +30,7 @@ const Modal = ({ closeButtonVisible = true, children }) => {
                     </svg>
                 </button>}
 
-                <div className="bg-white p-4 sm:p-6">
+                <div className="bg-white dark:bg-gray-900 p-4 sm:p-6">
                     {children}
                 </div>
             </div>

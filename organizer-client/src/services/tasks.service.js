@@ -33,6 +33,10 @@ class TasksService {
         return axios.delete(`${process.env.REACT_APP_BACKEND_API_URL}/${this.#resourceName}/${id}`, { headers: authHeader() });
     }
 
+    schedule() {
+        return axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/${this.#resourceName}/schedule`, {}, { headers: authHeader() });
+    }
+
 }
 
 export default new TasksService();

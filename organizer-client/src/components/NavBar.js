@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { createSearchParams, Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,7 @@ function NavBarNavLinkText({ active, text }) {
     return <span
         className={
             active
-                ? "block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
+                ? "block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-gray-300"
                 : "block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
         }
     >{text}</span>;
@@ -27,20 +27,31 @@ function NavBar() {
     const { t, i18n } = useTranslation();
     const user = useSelector(getUser);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(actions.fetchUser());
     }, [dispatch, location]);
 
+    const onSearch = (event) => {
+        console.log(event);
+        navigate({
+            pathname: "/app/search", search: createSearchParams({
+                query: event.target.value
+            }).toString()
+        });
+    };
+
     return (
         <header className="bg-white border-b border-gray-200 dark:border-gray-600 px-2 sm:px-4 py-2.5 dark:bg-gray-800">
             <div className="container flex flex-wrap justify-between items-center mx-auto">
                 <Link to="/app">
-                    <img
-                        className="h-12"
-                        src={`${process.env.PUBLIC_URL}"/images/logo.svg"`}
-                        alt={t("Logo")}
-                    ></img>
+                    {/*<img*/}
+                    {/*    className="h-12"*/}
+                    {/*    src={`${process.env.PUBLIC_URL}"/images/logo.svg"`}*/}
+                    {/*    alt={t("Logo")}*/}
+                    {/*></img>*/}
+                    <span className="text-4xl font-bold text-blue-600 ml-5">Organizer</span>
                 </Link>
 
                 <div
@@ -57,9 +68,9 @@ function NavBar() {
                             </svg>
                         </div>
                         <input
-                            type="text" id="email-address-icon"
-                            className="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder={t("Search")}/>
+                            type="search" id="email-address-icon"
+                            className="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-300 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder={t("Search")} onChange={onSearch}/>
                     </div>
                 </div>
 
@@ -77,7 +88,7 @@ function NavBar() {
                         id="dropdown">
                         {user && <div className="py-3 px-4">
                             <span
-                                className="block text-sm text-gray-900 dark:text-white">{user.name} {user.surname}</span>
+                                className="block text-sm text-gray-900 dark:text-gray-300">{user.name} {user.surname}</span>
                             <span
                                 className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">{user.email}</span>
                         </div>}
@@ -94,17 +105,17 @@ function NavBar() {
                                     state={{ backgroundLocation: location }}
                                     className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{t("Settings")}</Link>
                             </li>
-                            <li className="relative">
-                                <Link
-                                    to="/app/upgrade"
-                                    state={{ backgroundLocation: location }}
-                                    className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{t("Upgrade")}</Link>
-                                <span className="flex absolute h-3 w-3 top-1/2 right-1 -mt-1.5 mr-3">
-                                  <span
-                                      className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                                  <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
-                                </span>
-                            </li>
+                            {/*<li className="relative">*/}
+                            {/*    <Link*/}
+                            {/*        to="/app/upgrade"*/}
+                            {/*        state={{ backgroundLocation: location }}*/}
+                            {/*        className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{t("Upgrade")}</Link>*/}
+                            {/*    <span className="flex absolute h-3 w-3 top-1/2 right-1 -mt-1.5 mr-3">*/}
+                            {/*      <span*/}
+                            {/*          className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>*/}
+                            {/*      <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>*/}
+                            {/*    </span>*/}
+                            {/*</li>*/}
                             <li>
                                 <Link
                                     to="/logout"
@@ -164,9 +175,9 @@ function NavBar() {
                             </svg>
                         </div>
                         <input
-                            type="text" id="email-address-icon"
-                            className="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder={t("Search")}/>
+                            type="search" id="email-address-icon"
+                            className="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-300 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder={t("Search")} onChange={onSearch}/>
                     </div>
                 </div>
             </div>

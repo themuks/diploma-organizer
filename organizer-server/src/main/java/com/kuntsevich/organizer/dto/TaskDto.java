@@ -1,7 +1,6 @@
 package com.kuntsevich.organizer.dto;
 
 import com.kuntsevich.organizer.model.enumerated.Priority;
-import com.kuntsevich.organizer.model.enumerated.Regularity;
 import com.kuntsevich.organizer.model.enumerated.TaskStatus;
 import lombok.Data;
 
@@ -24,8 +23,6 @@ public class TaskDto {
     private Priority priority = Priority.NO_PRIORITY;
     @Enumerated
     private TaskStatus taskStatus = TaskStatus.TO_DO;
-    @Enumerated
-    private Regularity regularity = Regularity.NOT_REGULAR;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

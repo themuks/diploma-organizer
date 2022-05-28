@@ -37,6 +37,7 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public Note create(User user, Note note) {
         note.setId(user.getId());
+        note.setUser(user);
         return noteRepository.save(note);
     }
 

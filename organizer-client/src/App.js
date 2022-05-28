@@ -1,6 +1,5 @@
-import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Link, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import WelcomePage from "./pages/welcome/WelcomePage";
 import ApplicationPage from "./pages/app/ApplicationPage";
 import DashboardPage from "./pages/app/DashboardPage";
 import TasksPage from "./pages/app/tasks/TasksPage";
@@ -20,16 +19,41 @@ import RemindersPage from "./pages/app/reminders/RemindersPage";
 import SignOutPage from "./pages/SignOutPage";
 import AuthVerify from "./components/AuthVerify";
 import * as actions from "./redux/user/actions";
+import ReminderDetailsPage from "./pages/app/reminders/ReminderDetailsPage";
+import ReminderCreatePage from "./pages/app/reminders/ReminderCreatePage";
+import SearchPage from "./pages/app/SearchPage";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import PreferencesService from "./services/preferences.service";
 
 
 function App() {
+    const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
+    const { t, i18n } = useTranslation();
     let state = location.state;
 
     const logout = () => {
         dispatch(actions.logout());
     };
+
+    const rawSetTheme = (rawTheme) => {
+        const root = window.document.documentElement;
+        const isDark = rawTheme === "dark";
+
+        root.classList.remove(isDark ? "light" : "dark");
+        root.classList.add(rawTheme);
+
+        localStorage.setItem("color-theme", rawTheme);
+    };
+
+    useEffect(() => {
+        PreferencesService.getCurrentUserPreferences().then(response => {
+            i18n.changeLanguage(response.data.language === "RUSSIAN" ? "ru" : "en");
+            rawSetTheme(response.data.theme === "DARK" ? "dark" : "light");
+        });
+    }, []);
 
     return (<>
             {state?.backgroundLocation && (
@@ -42,12 +66,14 @@ function App() {
                 </Routes>
             )}
             <Routes location={state?.backgroundLocation || location}>
-                <Route path="/" element={<MainPage/>}>
-                    <Route path="welcome" element={<WelcomePage/>}/>
+                <Route element={<MainPage/>}>
                     <Route path="app" element={<ApplicationPage/>}>
                         <Route path="dashboard" element={<DashboardPage/>}/>
+                        <Route path="search" element={<SearchPage/>}/>
                         <Route path="tasks" element={<TasksPage/>}/>
                         <Route path="reminders" element={<RemindersPage/>}/>
+                        <Route path="reminders/:id" element={<ReminderDetailsPage/>}/>
+                        <Route path="reminders/new" element={<ReminderCreatePage/>}/>
                         <Route path="notes" element={<NotesPage/>}/>
                         <Route path="notes/:id" element={<NoteDetailsPage/>}/>
                         <Route path="notes/new" element={<NoteCreatePage/>}/>
